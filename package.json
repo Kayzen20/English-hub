@@ -1,0 +1,9 @@
+{
+  "name": "englishhub",
+  "version": "1.0.0",
+  "description": "EnglishHub - aplikasi belajar bahasa Inggris dengan login, database, dan leaderboard",
+  "main": "server.js",
+  "scripts": { "start": "node server.js", "test": "node test.js" },
+  "engines": { "node": ">=22.13" },
+  "license": "MIT"
+}

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: englishhub
+    runtime: node
+    plan: starter            # disk persisten butuh plan berbayar; free plan = data hilang saat restart
+    buildCommand: npm install
+    healthCheckPath: /healthz
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: SECRET
+        generateValue: true
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DB_PATH
+        value: /var/data/englishhub.db
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1

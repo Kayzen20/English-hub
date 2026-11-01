@@ -1,0 +1,24 @@
+# Jalankan di VPS / komputer yang sudah ada Docker:  docker compose up -d --build
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      SECRET: ${SECRET:?isi SECRET di file .env}
+      TRUST_PROXY: "1"
+      DB_PATH: /data/englishhub.db
+    volumes:
+      - eh-data:/data          # database tersimpan di sini, aman saat restart
+  web:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on: [app]
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN::80}    # kosong = HTTP biasa di port 80; isi domain = HTTPS otomatis
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+volumes:
+  eh-data:
+  caddy-data:
